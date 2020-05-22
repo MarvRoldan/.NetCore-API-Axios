@@ -8,13 +8,18 @@ if ( allToDos )
     .then( response => response.data )
     // "Process" our data (JSON object or array.)
     .then( data => {
-      console.log( data );
-      // Output list of todos.
-      // data.forEach( toDo => {
-
-      // } );
+      // console.log( data );
+      data.forEach( toDo => { // Output list of todos.
+        const toDoLI = document.createElement( 'LI' );
+        toDoLI.textContent = ' ' + toDo.task;
+        const toDoCheckbox = document.createElement( 'INPUT' );
+        toDoCheckbox.type = 'checkbox';
+        toDoLI.prepend( toDoCheckbox );
+        allToDos.appendChild( toDoLI );
+      } );
     } );
 }
+
 
 // Grab the "create" ToDo form.
 const createToDo = document.getElementById( 'create' );
@@ -25,7 +30,7 @@ if ( createToDo )
     event.preventDefault(); // Stop form from real submit.
     // Retrieve form field values.
     const newTask = document.getElementById( 'task' ).value;
-    const newCompleted = document.getElementById( 'completed' ).value;
+    const newCompleted = document.getElementById( 'completed' ).checked;
     // Create the new todo.
     axios.post( 'https://localhost:44317/api/ToDoItems/', {
       Task: newTask,
@@ -33,6 +38,9 @@ if ( createToDo )
     } )
       .then( response => { // On success, redirect to full list.
         document.location.href = './index.html';
+      } )
+      .catch( error => {
+        console.log( error );
       } );
   } );
 }
