@@ -14,6 +14,9 @@ if ( allToDos )
         toDoLI.textContent = ' ' + toDo.task;
         const toDoCheckbox = document.createElement( 'INPUT' );
         toDoCheckbox.type = 'checkbox';
+        toDoCheckbox.addEventListener('click', event => {
+            axios.delete('https://localhost:44317/api/ToDoItems/' + toDo.id);
+        });
         toDoLI.prepend( toDoCheckbox );
         allToDos.appendChild( toDoLI );
       } );
