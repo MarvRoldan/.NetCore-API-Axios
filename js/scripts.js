@@ -1,32 +1,38 @@
 // Grab the index list of all todos.
-const allToDos = document.getElementById('index');
-
-// If avialable, proceed.
-if (allToDos)
-{   // Run axios to obtain list.
-    axios.get('https://localhost:44317/api/ToDoItems')
+const allToDos = document.getElementById( 'index' );
+// If available, proceed.
+if ( allToDos )
+{ // Run Axios to obtain list.
+  axios.get( 'https://localhost:44317/api/ToDoItems/' )
     // Get just the data from the response.
-    .then(reponse => reponse.data)
+    .then( response => response.data )
     // "Process" our data (JSON object or array.)
-    .then(data => {
-        // Output list of todos.
-        data.forEach( toDo => {
-            console.log(data);
+    .then( data => {
+      console.log( data );
+      // Output list of todos.
+      // data.forEach( toDo => {
 
-        });
-    });
+      // } );
+    } );
 }
 
-// Grab the index list of all todos. 
-const createToDo = document.getElementById('create');
-if (createToDo)
-{
-    createToDo.addEventListener('submit', event => {
-        //Stop form from real submit.
-        event.preventDefault();
-        // Create the new todo.
-        axios.post('https://localhost:44317/api/ToDoItems')
-        // On success, rediret to full list.
-        .then(reponse => {document.local.href = './index.html'});
-    });
+// Grab the "create" ToDo form.
+const createToDo = document.getElementById( 'create' );
+// If there is a "create" ToDo form, proceed...
+if ( createToDo )
+{ // Listen for submission.
+  createToDo.addEventListener( 'submit', event => {
+    event.preventDefault(); // Stop form from real submit.
+    // Retrieve form field values.
+    const newTask = document.getElementById( 'task' ).value;
+    const newCompleted = document.getElementById( 'completed' ).value;
+    // Create the new todo.
+    axios.post( 'https://localhost:44317/api/ToDoItems/', {
+      Task: newTask,
+      Completed: newCompleted
+    } )
+      .then( response => { // On success, redirect to full list.
+        document.location.href = './index.html';
+      } );
+  } );
 }
