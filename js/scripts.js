@@ -19,3 +19,14 @@ if (allToDos)
 
 // Grab the index list of all todos. 
 const createToDo = document.getElementById('create');
+if (createToDo)
+{
+    createToDo.addEventListener('submit', event => {
+        //Stop form from real submit.
+        event.preventDefault();
+        // Create the new todo.
+        axios.post('https://localhost:44317/api/ToDoItems')
+        // On success, rediret to full list.
+        .then(reponse => {document.local.href = './index.html'});
+    });
+}
